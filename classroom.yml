@@ -1,0 +1,219 @@
+name: Autograding Tests
+
+on:
+  - push
+  - workflow_dispatch
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pandas matplotlib
+
+      # Headless backend for matplotlib (autograder safe)
+      - name: Set Matplotlib backend
+        run: echo "MPLBACKEND=Agg" >> $GITHUB_ENV
+
+      # ==========================================
+      # SECTION A: EASY (2 Points Each) — 5 Exercises
+      # ==========================================
+
+      - name: Exercise 1 - DateTime Parsing
+        id: exercise-1
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 1 - DateTime Parsing
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex1_parse_and_enrich_dates -v
+          timeout: 20
+          max-score: 2
+
+      - name: Exercise 2 - OO Line Plot
+        id: exercise-2
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 2 - OO Line Plot
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex2_make_line_plot -v
+          timeout: 20
+          max-score: 2
+
+      - name: Exercise 3 - Histogram Basics
+        id: exercise-3
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 3 - Histogram Basics
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex3_make_histogram -v
+          timeout: 20
+          max-score: 2
+
+      - name: Exercise 4 - Category Counts Bar Plot
+        id: exercise-4
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 4 - Category Counts Bar Plot
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex4_plot_category_counts -v
+          timeout: 20
+          max-score: 2
+
+      - name: Exercise 5 - Pandas Line Plot
+        id: exercise-5
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 5 - Pandas Line Plot
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex5_pandas_line_plot -v
+          timeout: 20
+          max-score: 2
+
+      # ==========================================
+      # SECTION B: MEDIUM (3 Points Each) — 5 Exercises
+      # ==========================================
+
+      - name: Exercise 6 - Daily Aggregation
+        id: exercise-6
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 6 - Daily Aggregation
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex6_daily_totals -v
+          timeout: 20
+          max-score: 3
+
+      - name: Exercise 7 - Plot and Save Line
+        id: exercise-7
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 7 - Plot and Save Line
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex7_plot_and_save_line -v
+          timeout: 20
+          max-score: 3
+
+      - name: Exercise 8 - Plot on Existing Ax
+        id: exercise-8
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 8 - Plot on Existing Ax
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex8_plot_on_existing_ax -v
+          timeout: 20
+          max-score: 3
+
+      - name: Exercise 9 - Histogram with Custom Bins
+        id: exercise-9
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 9 - Histogram with Custom Bins
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex9_histogram_with_bins -v
+          timeout: 20
+          max-score: 3
+
+      - name: Exercise 10 - Simple Subplots
+        id: exercise-10
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 10 - Simple Subplots
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex10_simple_subplots -v
+          timeout: 20
+          max-score: 3
+
+      # ==========================================
+      # SECTION C: HARD (5 Points Each) — 5 Exercises
+      # ==========================================
+
+      - name: Exercise 11 - Sales Dashboard
+        id: exercise-11
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 11 - Sales Dashboard
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex11_plot_sales_dashboard -v
+          timeout: 30
+          max-score: 5
+
+      - name: Exercise 12 - Weekly Mean
+        id: exercise-12
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 12 - Weekly Mean
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex12_weekly_mean -v
+          timeout: 30
+          max-score: 5
+
+      - name: Exercise 13 - Top N Days by Total
+        id: exercise-13
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 13 - Top N Days by Total
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex13_top_n_days_by_total -v
+          timeout: 30
+          max-score: 5
+
+      - name: Exercise 14 - Compare Two Metrics
+        id: exercise-14
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 14 - Compare Two Metrics
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex14_compare_two_metrics -v
+          timeout: 30
+          max-score: 5
+
+      - name: Exercise 15 - Date Range Filter + Plot
+        id: exercise-15
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise 15 - Date Range Filter + Plot
+          setup-command: ""
+          command: python -m pytest test_lab8.py::TestLab8Friendly::test_ex15_plot_date_range -v
+          timeout: 30
+          max-score: 5
+
+      # ==========================================
+      # REPORTER
+      # ==========================================
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          EXERCISE-1_RESULTS: "${{steps.exercise-1.outputs.result}}"
+          EXERCISE-2_RESULTS: "${{steps.exercise-2.outputs.result}}"
+          EXERCISE-3_RESULTS: "${{steps.exercise-3.outputs.result}}"
+          EXERCISE-4_RESULTS: "${{steps.exercise-4.outputs.result}}"
+          EXERCISE-5_RESULTS: "${{steps.exercise-5.outputs.result}}"
+          EXERCISE-6_RESULTS: "${{steps.exercise-6.outputs.result}}"
+          EXERCISE-7_RESULTS: "${{steps.exercise-7.outputs.result}}"
+          EXERCISE-8_RESULTS: "${{steps.exercise-8.outputs.result}}"
+          EXERCISE-9_RESULTS: "${{steps.exercise-9.outputs.result}}"
+          EXERCISE-10_RESULTS: "${{steps.exercise-10.outputs.result}}"
+          EXERCISE-11_RESULTS: "${{steps.exercise-11.outputs.result}}"
+          EXERCISE-12_RESULTS: "${{steps.exercise-12.outputs.result}}"
+          EXERCISE-13_RESULTS: "${{steps.exercise-13.outputs.result}}"
+          EXERCISE-14_RESULTS: "${{steps.exercise-14.outputs.result}}"
+          EXERCISE-15_RESULTS: "${{steps.exercise-15.outputs.result}}"
+        with:
+          runners: exercise-1,exercise-2,exercise-3,exercise-4,exercise-5,exercise-6,exercise-7,exercise-8,exercise-9,exercise-10,exercise-11,exercise-12,exercise-13,exercise-14,exercise-15
