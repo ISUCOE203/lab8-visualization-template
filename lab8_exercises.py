@@ -32,6 +32,18 @@ import matplotlib.pyplot as plt
 #   IMPORTANT:
 #       Function name MUST be exactly "parse_and_enrich_dates".
 
+def parse_and_enrich_dates(date_strings):
+    datetimes = pd.to_datetime(date_strings, format='mixed')
+    df = pd.DataFrame({
+        "datetime": datetimes,
+        "year": datetimes.year,
+        "month": datetimes.month,
+        "day": datetimes.day,
+        "day_name": datetimes.day_name(),
+        "is_leap_year": datetimes.is_leap_year
+    })
+    return df
+
 
 # ==========================================
 # EXERCISE 2: Week 7 Reminder - OO Line Plot (2 points)

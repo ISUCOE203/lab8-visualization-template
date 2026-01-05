@@ -12,6 +12,13 @@
 - Date strings in real datasets are not always in a single, uniform format.
   Pandas can often infer formats automatically, but assumptions may lead to errors.
 
+- **Mixed date formats edge case**: When your date strings have different formats
+  (e.g., `"2024-02-02 12:38"` and `"2023-12-03"`), use `format='mixed'`:
+  ```python
+  pd.to_datetime(date_strings, format='mixed')
+  ```
+  This allows Pandas to infer the format for each element individually.
+
 - When extracting parts of a date (year, month, day, etc.), Pandas typically provides
   specialized accessors designed for datetime data.
 

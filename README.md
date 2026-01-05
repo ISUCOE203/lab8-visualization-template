@@ -70,6 +70,16 @@ The lab consists of **15 exercises** divided into three sections:
 
 ---
 
+## 🛠️ Installation
+
+Before running the tests, install the required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
 ## 🧠 Tips
 
 - Prefer Pandas datetime utilities (`pd.to_datetime`, `.dt` accessor).
